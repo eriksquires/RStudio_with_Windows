@@ -76,13 +76,13 @@ $ git config --global user.email "your.email@example.com"
 
 Really can't stress enough how much I hate VS Code. Mostly because my use of it is intermittent and this is one of those bro tools that wants you to show your machismo by absolutely not making anything intuitive. Still, I do use it, especially with SQL Tools extensions to help me view and edit my source databases.
 
-This may be confusingly simple because previous versions of WSL and VS Code required more complicated setups and shims.  That's no longer true. 
+This may be confusingly simple because previous versions of WSL and VS Code required more complicated setups and shims. That's no longer true.
 
-**Do NOT install VS Code in WSL.** 
+**Do NOT install VS Code in WSL.**
 
-Install VS Code from the Microsoft Store like any other Windows application. The trick is that we install VS Code in Windows but we launch VS Code from inside WSL. You should be able to use PowerShell to install it like this:
+Install VS Code from the Microsoft Store like any other Windows application. The trick to a happy life is that we will *install* VS Code in Windows but we will *launch* VS Code from inside WSL. You can use the Microsoft Store UI to locate VS Code or you can use PowerShell to install it like this:
 
-```text
+``` text
 PS C:\WINDOWS\system32> winget install Microsoft.VisualStudioCode
 ```
 
@@ -93,7 +93,7 @@ $ git config --global core.editor "code --wait"
 $ cd ~/dev
 ```
 
-OK, now you are ready to experience the magic of VS Code / WSL integration! 
+OK, now you are ready to experience the magic of VS Code / WSL integration!
 
 ``` bash
 $ cd ~/dev
@@ -110,7 +110,7 @@ If you do then you are all set. VS Code will work as if it was natively running 
 
 WSL is meant to look and feel like a terminal only version of real Ubuntu and for the most part it offers you just that. The one place where the illusion breaks is with apparmor. Normally you don't care until an installer breaks because apparmor really isn't there. This applies to most packages which work over the network. One example of a tool that breaks in installation is the Postgres admin tool, pgadmin-desktop.
 
-It's worth just getting this out of the way once so you never have to deal with it again. It is not required for RStudio. 
+It's worth just getting this out of the way once so you never have to deal with it again. It is not required for RStudio.
 
 ## Configure systemd
 
@@ -215,7 +215,7 @@ $ sudo apt install ./rstudio-2025.09.2-418-amd64.deb
 
 Start RStudio and check that you have the Posit repo installed:
 
-```r
+``` r
 getOption("repos")
 ```
 

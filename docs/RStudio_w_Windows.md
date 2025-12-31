@@ -122,8 +122,9 @@ Code required more complicated setups and shims. That’s no longer true.
 **Do NOT install VS Code in WSL.**
 
 Install VS Code from the Microsoft Store like any other Windows
-application. The trick is that we install VS Code in Windows but we
-launch VS Code from inside WSL. You should be able to use PowerShell to
+application. The trick to a happy life is that we will *install* VS Code
+in Windows but we will *launch* VS Code from inside WSL. You can use the
+Microsoft Store UI to locate VS Code or you can use PowerShell to
 install it like this:
 
 ``` text
