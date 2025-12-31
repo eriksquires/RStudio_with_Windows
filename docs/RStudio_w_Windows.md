@@ -123,8 +123,8 @@ and shims. That’s no longer true. Here’s the rule:
 **Do NOT install VS Code in WSL.**
 
 We now install VS Code from the Microsoft Store like any other Windows
-application. The trick to happiness is that even though we will
-*install* VS Code in Windows we will *launch* VS Code from inside WSL.
+application. The trick to happiness is that we will *install* VS Code in
+Windows but we will *launch* VS Code from inside WSL.
 
 You can install VS Code from the Microsoft Store UI or even simply from
 PowerShell like this:
