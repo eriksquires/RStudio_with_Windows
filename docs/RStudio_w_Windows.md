@@ -116,14 +116,14 @@ Really can’t stress enough how much I hate VS Code. Mostly because my
 use of it is intermittent and this is one of those bro tools that wants
 you to show your machismo by absolutely not making anything intuitive.
 
-Installing VS Code for WSL may be confusingly simple for you because
+Installing VS Code for WSL may be confusingly simple for some because
 previous versions of WSL and VS Code required more complicated setups
 and shims. That’s no longer true. Here’s the rule:
 
 **Do NOT install VS Code in WSL.**
 
 We now install VS Code from the Microsoft Store like any other Windows
-application. The trick to happiness is that we even though we will
+application. The trick to happiness is that even though we will
 *install* VS Code in Windows we will *launch* VS Code from inside WSL.
 
 You can install VS Code from the Microsoft Store UI or even simply from
