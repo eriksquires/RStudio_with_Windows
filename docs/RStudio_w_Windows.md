@@ -57,9 +57,9 @@ Make sure you have the correct WSL version. You’ll want to have version
 
 ``` text
 PS C:\WINDOWS\system32> wsl -l -v
+
   NAME      STATE           VERSION
 * Ubuntu    Running         2
-PS C:\WINDOWS\system32>
 ```
 
 If you are not on version 2 you’ll need admin rights to run an elevated
@@ -72,7 +72,7 @@ PS C:\WINDOWS\system32> wsl --update
 To complete your R/WSL installation you’ll need to restart WSL a few
 times. For that you’ll use:
 
-``` bash
+``` text
 PS C:\WINDOWS\system32> wsl --shutdown
 ```
 
@@ -95,11 +95,14 @@ useful features to make your interactions with github easier, but I
 especially like the auth command.
 
 ``` bash
+# Install gh
 $ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+
 $ sudo apt update
 $ sudo apt install git gh
 
+# Authenticate your git installation.
 # Make sure you already have a Github login.
 # Add --hostname your_gh_server.your_corp.com if using a private repo
 $ gh auth login 
@@ -214,7 +217,7 @@ Start your WSL normally.
 ## Enable AppArmor
 
 ``` bash
-sudo systemctl enable --now apparmor
+$ sudo systemctl enable --now apparmor
 ```
 
 Reboot WSL once more and try an experiment:
@@ -282,9 +285,29 @@ $ cd ~/downloads
 $ wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2025.09.2-418-amd64.deb
 
 $ sudo apt install ./rstudio-2025.09.2-418-amd64.deb
+
+# If needed: 
+# mkdir ~/bin
+$ gedit ~/bin/rstudio
 ```
 
-Start RStudio and check that you have the Posit repo installed:
+Add these lines to ~/bin/rstudio to make it more terminal friendly:
+
+``` text
+#! /usr/bin/bash
+
+/usr/bin/rstudio  > /dev/null 2>&1 &
+```
+
+Make it executable
+
+``` bash
+$ chmod +x ~/bin/rstudio
+```
+
+At this point you can start RStudio from the command line or Windows
+application menu. Start RStudio and check that you have the Posit repo
+installed:
 
 ``` r
 getOption("repos")
