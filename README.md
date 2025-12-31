@@ -116,17 +116,32 @@ you to show your machismo by absolutely not making anything intuitive.
 Still, I do use it, especially with SQL Tools extensions to help me view
 and edit my source databases.
 
-**Do NOT install VS Code in WSL.** I believe in previous versions of WSL
-and VS Code there were shims to install but as of WSL 2 and late 2025
-none of this is needed now. Install VS Code from the Microsoft Store
-like any other Windows application. The trick is to launch VS Code from
-inside WSL.
+This may be confusingly simple because previous versions of WSL and VS
+Code required more complicated setups and shims. That’s no longer true.
 
-There is one minor fixup in WSL you should do. Set up the git commit
-message editor to use `code` as well:
+**Do NOT install VS Code in WSL.**
+
+Install VS Code from the Microsoft Store like any other Windows
+application. The trick is that we install VS Code in Windows but we
+launch VS Code from inside WSL. You should be able to use PowerShell to
+install it like this:
+
+``` text
+PS C:\WINDOWS\system32> winget install Microsoft.VisualStudioCode
+```
+
+There is one minor fixup in WSL you should do now, before starting code.
+Set up the git commit message editor to use `code` as well:
 
 ``` bash
 $ git config --global core.editor "code --wait"
+$ cd ~/dev
+```
+
+OK, now you are ready to experience the magic of VS Code / WSL
+integration!
+
+``` bash
 $ cd ~/dev
 $ code . # Launches the Windows VS Code but sees ~/dev file folders.
 ```
@@ -152,7 +167,7 @@ tool that breaks in installation is the Postgres admin tool,
 pgadmin-desktop.
 
 It’s worth just getting this out of the way once so you never have to
-deal with it again.
+deal with it again. It is not required for RStudio.
 
 ## Configure systemd
 
