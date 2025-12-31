@@ -206,8 +206,7 @@ securityfs /sys/kernel/security securityfs defaults 0 0
 ## Restart
 
 ``` text
-# In powershell:
-wsl --shutdown
+PS C:\WINDOWS\system32> wsl --shutdown
 ```
 
 Start your WSL normally.
