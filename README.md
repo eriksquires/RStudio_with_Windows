@@ -104,6 +104,8 @@ $ sudo apt install git gh
 # Add --hostname your_gh_server.your_corp.com if using a private repo
 $ gh auth login 
 
+# Despite gh doing the auth for you we still need a couple more configs
+# to make commits automatic. 
 $ git config --global user.name "Your Name"
 $ git config --global user.email "your.email@example.com"
 ```
@@ -113,26 +115,27 @@ $ git config --global user.email "your.email@example.com"
 Really can’t stress enough how much I hate VS Code. Mostly because my
 use of it is intermittent and this is one of those bro tools that wants
 you to show your machismo by absolutely not making anything intuitive.
-Still, I do use it, especially with SQL Tools extensions to help me view
-and edit my source databases.
 
-This may be confusingly simple because previous versions of WSL and VS
-Code required more complicated setups and shims. That’s no longer true.
+Installing VS Code for WSL may be confusingly simple for you because
+previous versions of WSL and VS Code required more complicated setups
+and shims. That’s no longer true. Here’s the rule:
 
 **Do NOT install VS Code in WSL.**
 
-Install VS Code from the Microsoft Store like any other Windows
-application. The trick to a happy life is that we will *install* VS Code
-in Windows but we will *launch* VS Code from inside WSL. You can use the
-Microsoft Store UI to locate VS Code or you can use PowerShell to
-install it like this:
+We now install VS Code from the Microsoft Store like any other Windows
+application. The trick to happiness is that we even though we will
+*install* VS Code in Windows we will *launch* VS Code from inside WSL.
+
+You can install VS Code from the Microsoft Store UI or even simply from
+PowerShell like this:
 
 ``` text
 PS C:\WINDOWS\system32> winget install Microsoft.VisualStudioCode
 ```
 
-There is one minor fixup in WSL you should do now, before starting code.
-Set up the git commit message editor to use `code` as well:
+There is one minor fixup in WSL for git you should do now, before
+starting code. Set up the git commit message editor to use `code` as
+well:
 
 ``` bash
 $ git config --global core.editor "code --wait"
@@ -143,6 +146,8 @@ OK, now you are ready to experience the magic of VS Code / WSL
 integration!
 
 ``` bash
+# If needed: 
+# mkdir ~/dev 
 $ cd ~/dev
 $ code . # Launches the Windows VS Code but sees ~/dev file folders.
 ```
@@ -153,7 +158,7 @@ and you should see this:
 ![WSL Connected](images/wsl_connected.jpg)
 
 If you do then you are all set. VS Code will work as if it was natively
-running in your WSL / Ubuntu OS. Your VS add-ons, virtual environment
+running in your WSL / Ubuntu OS. Your VS extentions, virtual environment
 settings, and direnv will all behave exactly as you would expect so long
 as you start code in the right directory.
 
@@ -256,6 +261,7 @@ From WSL: `$ gedit ~/.Rprofile` Add these lines to Rprofile. Replace
 ``` r
 options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
 
+# mkdir -p ~/R/library if needed
 .libPaths(c("~/R/library", .libPaths()))
 
 # Set Cairo as default bitmap device
