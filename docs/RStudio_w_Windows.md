@@ -266,7 +266,7 @@ $ sudo apt install ./rstudio-2025.09.2-418-amd64.deb
 Start RStudio and check that you have the Posit repo installed:
 
 ``` r
-> getOption("repos")
+getOption("repos")
 ```
 
 Should return a string with “posit”.
@@ -302,13 +302,16 @@ Rmd/Qmd docs and Shiny apps.
 
 ``` r
 library(here)
-df <- read_rds(here('data', 'my_datastore.rds'))
+my_data_file <- here('data', 'my_datastore.rds'))
+my_data_file
+
+[1] "/home/yourname/dev/RStudio_with_Windows/data/my_datastore.rds"
 ```
 
 When running from Rscript though you need to start in the project root.
 Here’s an example:
 
-``` text
+``` bash
 $ cd ~/dev/finance_forecast_project
 $ Rscript R/my_forecast.R
 ```
