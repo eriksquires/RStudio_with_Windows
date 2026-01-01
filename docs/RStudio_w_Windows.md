@@ -50,7 +50,18 @@ For the rest of this article we assume you will go down the WSL path,
 but some tips may still apply to you elsewhere, like using the Posit
 repo and `here()`.
 
-# WSL Configuration
+# Windows Subsystem for Linux
+
+## Installation
+
+If you don’t even have WSL installed you will need to launch an elevated
+PowerShell and do this:
+
+``` text
+PS C:\WINDOWS\system32> wsl --install
+```
+
+## Configuration
 
 Make sure you have the correct WSL version. You’ll want to have version
 2, which *is* also available for Windows 10. In PowerShell:

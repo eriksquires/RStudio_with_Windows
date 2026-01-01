@@ -23,7 +23,16 @@ Another possibility, outside the scope of this document, is to use RStudio Serve
 
 For the rest of this article we assume you will go down the WSL path, but some tips may still apply to you elsewhere, like using the Posit repo and `here()`.
 
-# WSL Configuration
+# Windows Subsystem for Linux
+## Installation
+
+If you don't even have WSL installed you will need to launch an elevated PowerShell and do this:
+
+``` text
+PS C:\WINDOWS\system32> wsl --install
+```
+
+## Configuration
 
 Make sure you have the correct WSL version. You'll want to have version 2, which *is* also available for Windows 10. In PowerShell:
 
@@ -32,12 +41,6 @@ PS C:\WINDOWS\system32> wsl -l -v
 
   NAME      STATE           VERSION
 * Ubuntu    Running         2
-```
-
-If you don't even have WSL installed you will need to launch an elevated PowerShell and do this:
-
-``` text
-PS C:\WINDOWS\system32> wsl --install
 ```
 
 If you are not on version 2 you'll need admin rights to run an elevated PowerShell and then:
