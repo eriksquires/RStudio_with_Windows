@@ -14,8 +14,7 @@ machine you should consider [changing your repo to install from prebuilt
 binaries](#install-r-packages-from-binaries). This will usually prevent
 you from having to compile anything and is much faster than installing
 from sources. There are R/RStudio users who end up happy this way, I was
-not one of them. The rest of this document, as a bsky.app user
-commented, is: “a guide on all the ways to avoid using Windows.”
+not one of them.
 
 If your main development tool is R and RStudio and all the packages you
 need are available as binaries you may be all set and the rest of this
@@ -54,7 +53,7 @@ fit. WSL is also a much lower maintenance environment than running
 Docker for Windows just to do R development.
 
 Think of the rest of this document as a guide to configure an R-centric,
-but not R-exclusive, environment on Windows.
+but not R-exclusive, development environment on Windows.
 
 ## RStudio Server?
 
