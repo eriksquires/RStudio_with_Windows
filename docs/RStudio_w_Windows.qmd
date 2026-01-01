@@ -9,26 +9,25 @@ editor: visual
 
 I've usually used RStudio on OSX or Linux but recent job changes have forced me to live inside a Windows 10/11 laptop. I wanted to share with you how to make your R / data science world coexist with Windows.
 
-# Naked Windows Installation
+## Naked Windows Installation
 
-If you absolutely must run Windows without WSL or a Linux virtual machine you should consider [changing your repo to install from prebuilt binaries](#install-r-packages-from-binaries). This will usually prevent you from having to compile anything and is much faster than installing from sources.  There are R/RStudio users who end up happy this way, I was not one of them. 
+If you absolutely must run Windows without WSL or a Linux virtual machine you should consider [changing your repo to install from prebuilt binaries](#install-r-packages-from-binaries). This will usually prevent you from having to compile anything and is much faster than installing from sources. There are R/RStudio users who end up happy this way, I was not one of them.
 
-If your main development tool is R and RStudio and all the packages you need are available as binaries you may be all set and the rest of this doc may not be useful to you. 
+If your main development tool is R and RStudio and all the packages you need are available as binaries you may be all set and the rest of this doc may not be useful to you.
 
-# Don't Use Windows Alone
+## Don't Use Windows Alone
 
-My biggest tip if you are struggling or need to use other tools is to avoid using naked Windows as your R development platform. The more reliable and more pain-free path IMHO is to use the Windows Subsystem for Linux (WSL) or a full Linux Virtual Machine. Among the major reasons for this is consistently reliable package installation behavior. My experience is that:
+My biggest tip if you are struggling or need to use other tools is to avoid using naked Windows as your R-centric development platform. The more reliable and more pain-free path IMHO is to use the Windows Subsystem for Linux (WSL) or a full Linux Virtual Machine via [VirtualBox](https://www.virtualbox.org/) or (if your corp offers it) VMWare. My experience is that we avoid several issues this way:
 
-- R package installation on Windows is less predictable than on Linux, especially once compilation or system dependencies are involved. 
-- Additional developer tools will be Linux first, Windows as an afterthought. 
-- Outside of R, you will constantly fight path and script translation issues.
+-   R package installation on Windows is less predictable than on Linux, especially once compilation or system dependencies are involved.
+-   Additional developer tools will be Linux first, Windows as an afterthought.
+-   Outside of R, you will constantly fight path and script translation issues.
 
 If you haven't tried it, you may be surprised at how full-featured WSL is. In addition to acting like Ubuntu, WSL 2 now does a really good job of supporting GUI based applications thanks to WSLg. I strongly suggest you use it as your default development location.
 
 One other big advantage of WSL is that because it's a user space process you don't need admin rights to your laptop. So long as you get WSL version 2 you are pretty much set. The lack of admin rights makes security people very happy. There are some minor annoyances to walk through before everything works and we'll go over them. Except for the desktop experience (long live Xfce!) you will find WSL a very cozy place to live. Of course, WSL is also a very happy place for Python development, so extending WSL to support RStudio seems like a natural fit. WSL is also a much lower maintenance environment than running Docker for Windows just to do R development.
 
-Think of the rest of this document as a guide to configure an R-centric, but not R-exclusive, development environment on Windows.   
-
+Think of the rest of this document as a guide to configure an R-centric, but not R-exclusive, development environment on Windows.
 
 ## RStudio Server?
 
@@ -76,6 +75,67 @@ $ sudo apt install gedit
 ```
 
 Go ahead and install your favorite editor now and replace `gedit` with it whenever you see it. Another benefit of WSL 2 is you can install Ubuntu 24, which would not install on WSL 1.
+
+Now that you have the right version of WSL the remaining challenge is to ensure all other packages will install correctly, and for that we must configure AppArmor.
+
+## AppArmor
+
+WSL is meant to look and feel like a terminal-only version of a real Ubuntu system, and for the most part it succeeds. One place where this illusion breaks down is when an Ubuntu package expects AppArmor to be present during installation. This affects most packages which expose a service via a network port, including HTML-based interfaces like pgadmin or Grafana. These packages will fail to install until AppArmor is configured.
+
+Because this class of software is common, it’s often worth solving the AppArmor issue once and getting it out of the way. The downside is this will slow WSL startup time.
+
+These steps are not required for R or RStudio, which do not rely on AppArmor for normal operation.
+
+### Configure systemd
+
+``` bash
+$ sudo gedit /etc/wsl.conf
+```
+
+Add the following two lines:
+
+``` text
+[boot] 
+systemd=true
+```
+
+If you are not going to install services that need to be on at startup, change systemd=false after installation is complete for faster WSL load times.
+
+Note that this may make the following warning appear each time you start WSL. It is safe to ignore:
+
+``` text
+wsl: Failed to start the systemd user session for 'yourname'. See journalctl for more details.
+```
+
+### Edit fstab
+
+Add the following line to the end of /etc/fstab:
+
+``` text
+securityfs /sys/kernel/security securityfs defaults 0 0
+```
+
+### Restart
+
+``` text
+PS C:\WINDOWS\system32> wsl --shutdown
+```
+
+Start your WSL normally.
+
+### Enable AppArmor
+
+``` bash
+$ sudo systemctl enable --now apparmor
+```
+
+Reboot WSL once more and try an experiment:
+
+``` bash
+$ sudo apt install pgadmin-desktop
+```
+
+If this installs without throwing an error you are good to go.
 
 # Git
 
@@ -140,61 +200,6 @@ If you do then you are all set. VS Code will work as if it was natively running 
 
 VS Code will remember your connection preferences, but you can also start VS Code from Windows and reconnect to WSL. Click on the lower left of your Code window and select WSL and you are back in as if you were always here.
 
-# AppArmor
-
-WSL is meant to look and feel like a terminal only version of real Ubuntu and for the most part it offers you just that. The one place where the illusion breaks is with apparmor. Normally you don't care until an installer breaks because apparmor really isn't there. This applies to most packages which work over the network. One example of a tool that breaks in installation is the Postgres admin tool, pgadmin-desktop.
-
-It's worth just getting this out of the way once so you never have to deal with it again. It is not required for RStudio.
-
-## Configure systemd
-
-``` bash
-$ sudo gedit /etc/wsl.conf
-```
-
-Add the following two lines:
-
-``` text
-[boot] 
-systemd=true
-```
-
-Note that this may make the following warning appear each time you start WSL. It is safe to ignore:
-
-``` text
-wsl: Failed to start the systemd user session for 'yourname'. See journalctl for more details.
-```
-
-## Edit fstab
-
-Add the following line to the end of /etc/fstab:
-
-``` text
-securityfs /sys/kernel/security securityfs defaults 0 0
-```
-
-## Restart
-
-``` text
-PS C:\WINDOWS\system32> wsl --shutdown
-```
-
-Start your WSL normally.
-
-## Enable AppArmor
-
-``` bash
-$ sudo systemctl enable --now apparmor
-```
-
-Reboot WSL once more and try an experiment:
-
-``` bash
-$ sudo apt install pgadmin-desktop
-```
-
-If this installs without throwing an error you are good to go.
-
 # R
 
 ## Install R itself:
@@ -205,7 +210,7 @@ $ sudo apt install r-base
 $ sudo apt install libfontconfig1-dev libfreetype6-dev
 ```
 
-## Install R Packages from Binaries
+## Install R Packages from Binaries {#install-r-packages-from-binaries}
 
 Before installing user libraries set up your .Rprofile to use the Posit repo. The main reason is this repo has pre-compiled R packages so is much faster than CRAN. Duckdb for instance can take an hour or more to install from CRAN. [For more information about using the Posit binary repos go here](https://packagemanager.posit.co/client/#/repos/cran/setup).
 
@@ -320,4 +325,4 @@ Homebrew is a great tool for OSX developers. I'm pretty sure every single develo
 
 # Perl
 
-If you are going to do Perl development you should install [perlbrew](https://perlbrew.pl/). This gives you a personal Perl installation you can pick and chose the effective Perl version. Install the padwalker package from CPAN and you should be able to debug in VS Code like you would any other remote Perl installation.
+If you are going to do Perl development you should install [perlbrew](https://perlbrew.pl/). This gives you a personal Perl installation you can pick and chose the effective Perl version without stopming on the system Perl. Install the padwalker package from CPAN and you should be able to debug in VS Code like you would any other remote Perl installation.
