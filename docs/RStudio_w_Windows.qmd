@@ -27,6 +27,8 @@ If you haven't tried it, you may be surprised at how full-featured WSL is. In ad
 
 One other big advantage of WSL is that because it's a user space process you don't need admin rights to your laptop. So long as you get WSL version 2 you are pretty much set. The lack of admin rights makes security people very happy. There are some minor annoyances to walk through before everything works and we'll go over them. Except for the desktop experience (long live Xfce!) you will find WSL a very cozy place to live. Of course, WSL is also a very happy place for Python development, so extending WSL to support RStudio seems like a natural fit. WSL is also a much lower maintenance environment than running Docker for Windows just to do R development.
 
+Think of the rest of this document as a guide to configure an R-centric, but not R-exclusive, environment on Windows.   
+
 
 ## RStudio Server?
 

@@ -53,6 +53,9 @@ development, so extending WSL to support RStudio seems like a natural
 fit. WSL is also a much lower maintenance environment than running
 Docker for Windows just to do R development.
 
+Think of the rest of this document as a guide to configure an R-centric,
+but not R-exclusive, environment on Windows.
+
 ## RStudio Server?
 
 Another possibility, outside the scope of this document, is to use
