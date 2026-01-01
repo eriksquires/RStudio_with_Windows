@@ -118,8 +118,10 @@ $ git config --global user.email "your.email@example.com"
 Really can’t stress enough how much I hate VS Code. Mostly because my
 use of it is intermittent and this is one of those bro tools that wants
 you to show your machismo by absolutely not making anything intuitive.
+Despite my personal feelings, I cannot deny that I still am forced to
+use VS Code for many reasons, so it must co-exist with my other tools.
 
-Installing VS Code for WSL may be confusingly simple for some because
+Installing VS Code with WSL may be confusingly simple for some because
 previous versions of WSL and VS Code required more complicated setups
 and shims. That’s no longer true. Here’s the rule:
 
@@ -164,6 +166,11 @@ If you do then you are all set. VS Code will work as if it was natively
 running in your WSL / Ubuntu OS. Your VS extentions, virtual environment
 settings, and direnv will all behave exactly as you would expect so long
 as you start code in the right directory.
+
+VS Code will remember your connection preferences, but you can also
+start VS Code from Windows and reconnect to WSL. Click on the lower left
+of your Code window and select WSL and you are back in as if you were
+always here.
 
 # AppArmor
 
