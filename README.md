@@ -7,15 +7,35 @@ I’ve usually used RStudio on OSX or Linux but recent job changes have
 forced me to live inside a Windows 10/11 laptop. I wanted to share with
 you how to make your R / data science world coexist with Windows.
 
+# Naked Windows Installation
+
+If you absolutely must run Windows without WSL or a Linux virtual
+machine you should consider [changing your repo to install from prebuilt
+binaries](#install-r-packages-from-binaries). This will usually prevent
+you from having to compile anything and is much faster than installing
+from sources. There are R/RStudio users who end up happy this way, I was
+not one of them. The rest of this document, as a bsky.app user
+commented, is: “a guide on all the ways to avoid using Windows.”
+
+If your main development tool is R and RStudio and all the packages you
+need are available as binaries you may be all set and the rest of this
+doc may not be useful to you.
+
 # Don’t Use Windows Alone
 
-Honestly, the biggest tip is not to attempt to use naked Windows as your
-R development platform. You want to use the Windows Subsystem for Linux
-(WSL) or a full Linux Virtual Machine. Among the major reasons for this
-is consistently good package installation behavior. My experience is
-that R packages don’t install reliably in Windows. Some will, some won’t
-and why bother fighting it? Just use WSL or a virtual machine with
-Ubuntu.
+My biggest tip if you are struggling or need to use other tools is to
+avoid using naked Windows as your R development platform. The more
+reliable and more pain-free path IMHO is to use the Windows Subsystem
+for Linux (WSL) or a full Linux Virtual Machine. Among the major reasons
+for this is consistently reliable package installation behavior. My
+experience is that:
+
+- R package installation on Windows is less predictable than on Linux,
+  especially once compilation or system dependencies are involved.
+- Additional developer tools will be Linux first, Windows as an
+  afterthought.
+- Outside of R, you will constantly fight path and script translation
+  issues.
 
 If you haven’t tried it, you may be surprised at how full-featured WSL
 is. In addition to acting like Ubuntu, WSL 2 now does a really good job
@@ -80,7 +100,7 @@ PowerShell and then:
 PS C:\WINDOWS\system32> wsl --update
 ```
 
-To complete your R/WSL installation you’ll need to restart WSL a few
+To complete your WSL installation you’ll need to restart WSL a few
 times. For that you’ll use:
 
 ``` text
@@ -126,11 +146,9 @@ $ git config --global user.email "your.email@example.com"
 
 # VS Code
 
-Really can’t stress enough how much I hate VS Code. Mostly because my
-use of it is intermittent and this is one of those bro tools that wants
-you to show your machismo by absolutely not making anything intuitive.
-Despite my personal feelings, I cannot deny that I still am forced to
-use VS Code for many reasons, so it must co-exist with my other tools.
+Really can’t stress enough how much I hate VS Code. Despite my personal
+feelings, I cannot deny that I still am forced to use VS Code so it must
+co-exist with my other tools.
 
 Installing VS Code with WSL may be confusingly simple for some because
 previous versions of WSL and VS Code required more complicated setups
@@ -176,7 +194,8 @@ and you should see this:
 If you do then you are all set. VS Code will work as if it was natively
 running in your WSL / Ubuntu OS. Your VS extentions, virtual environment
 settings, and direnv will all behave exactly as you would expect so long
-as you start code in the right directory.
+as you start code in the right directory. This of course also means that
+if VS Code is your IDE of choice you are free to use it for R as well.
 
 VS Code will remember your connection preferences, but you can also
 start VS Code from Windows and reconnect to WSL. Click on the lower left
@@ -256,14 +275,16 @@ $ sudo apt install r-base
 $ sudo apt install libfontconfig1-dev libfreetype6-dev
 ```
 
-## Configure your R Package Source
+## Install R Packages from Binaries
 
 Before installing user libraries set up your .Rprofile to use the Posit
 repo. The main reason is this repo has pre-compiled R packages so is
 much faster than CRAN. Duckdb for instance can take an hour or more to
-install from CRAN.
+install from CRAN. [For more information about using the Posit binary
+repos go
+here](https://packagemanager.posit.co/client/#/repos/cran/setup).
 
-Find your Ubuntu codename:
+If on WSL, find your Ubuntu codename:
 
 ``` text
 $ lsb_release -a
@@ -275,14 +296,20 @@ Release:        24.04
 Codename:       noble
 ```
 
-From WSL: `$ gedit ~/.Rprofile` Add these lines to Rprofile. Replace
-“noble” with the codename from above then edit the file:
+For WSL: `$ gedit ~/.Rprofile` . For R on Windows:
+`notepad $env:USERPROFILE\.Rprofile`
+
+Add these lines to .Rprofile.
 
 ``` r
+# For R on Windows: 
+# options(repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"))
+
+
+# For R on Ubuntu/WSL, replace "noble" with the correct codename: 
 options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
 
-# mkdir -p ~/R/library if needed
-.libPaths(c("~/R/library", .libPaths()))
+
 
 # Set Cairo as default bitmap device
 # This is only needed for OSX, but here just in case plots don't render.
@@ -291,7 +318,8 @@ options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/l
 
 ## Install RStudio:
 
-Go to [Posit’s download
+For R I find RStudio much more comfortable to use than VS Code. We’ll go
+over the installation and configuration here. Go to [Posit’s download
 page](https://posit.co/download/rstudio-desktop/) and scroll down to
 find the right deb package (from lsb_release, above), and paste the link
 to it below:
@@ -364,7 +392,7 @@ Rmd/Qmd docs and Shiny apps.
 
 ``` r
 library(here)
-my_data_file <- here('data', 'my_datastore.rds'))
+my_data_file <- here('data', 'my_datastore.rds')
 my_data_file
 
 [1] "/home/yourname/dev/RStudio_with_Windows/data/my_datastore.rds"
