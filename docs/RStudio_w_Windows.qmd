@@ -19,7 +19,7 @@ One other big advantage of WSL is that because it's a user space process you don
 
 ## RStudio Server?
 
-Another possibility, outside the scope of this document, is to use RStudio Server. This is especially useful if your user base tends to have seriously underpowered laptops. In addition to giving you full Linux/Rstudio goodness you also have a single place to manage package dependencies. Your team gains velocity because you aren't all trying to figure out which Linux packages must be present to compile a specific R package. This can also be a huge help in managing connectivity to corporate data sources. Fixing access issues in one place may be much easier than fixing it in every developer's laptop. Imagine having to set up R with ODBC on half a dozen laptops and you'll see where this wins.
+Another possibility, outside the scope of this document, is to use RStudio Server. This is especially useful if your user base tends to have seriously underpowered laptops. In addition to giving you full Linux/RStudio goodness you also have a single place to manage package dependencies. Your team gains velocity because you aren't all trying to figure out which Linux packages must be present to compile a specific R package. This can also be a huge help in managing connectivity to corporate data sources. Fixing access issues in one place may be much easier than fixing it in every developer's laptop. Imagine having to set up R with ODBC on half a dozen laptops and you'll see where this wins.
 
 For the rest of this article we assume you will go down the WSL path, but some tips may still apply to you elsewhere, like using the Posit repo and `here()`.
 
@@ -32,6 +32,12 @@ PS C:\WINDOWS\system32> wsl -l -v
 
   NAME      STATE           VERSION
 * Ubuntu    Running         2
+```
+
+If you don't even have WSL installed you will need to launch an elevated PowerShell and do this:
+
+``` text
+PS C:\WINDOWS\system32> wsl --install
 ```
 
 If you are not on version 2 you'll need admin rights to run an elevated PowerShell and then:

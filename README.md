@@ -38,7 +38,7 @@ Docker for Windows just to do R development.
 Another possibility, outside the scope of this document, is to use
 RStudio Server. This is especially useful if your user base tends to
 have seriously underpowered laptops. In addition to giving you full
-Linux/Rstudio goodness you also have a single place to manage package
+Linux/RStudio goodness you also have a single place to manage package
 dependencies. Your team gains velocity because you aren’t all trying to
 figure out which Linux packages must be present to compile a specific R
 package. This can also be a huge help in managing connectivity to
