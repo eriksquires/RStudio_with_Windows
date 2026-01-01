@@ -54,8 +54,8 @@ repo and `here()`.
 
 ## Installation
 
-If you don’t even have WSL installed you will need to launch an elevated
-PowerShell and do this:
+If you don’t even have WSL installed you will need to install it. You
+can install from an elevated PowerShell:
 
 ``` text
 PS C:\WINDOWS\system32> wsl --install
