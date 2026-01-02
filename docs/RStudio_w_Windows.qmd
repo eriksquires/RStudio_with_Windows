@@ -198,7 +198,7 @@ When it finishes launching look on the bottom left corner of the window and you 
 
 If you do then you are all set. VS Code will work as if it was natively running in your WSL / Ubuntu OS. Your VS extentions, virtual environment settings, and direnv will all behave exactly as you would expect so long as you start code in the right directory. This of course also means that if VS Code is your IDE of choice you are free to use it for R as well.
 
-VS Code will remember your connection preferences, but you can also start VS Code from Windows and reconnect to WSL. Click on the lower left of your Code window and select WSL and you are back in as if you were always here.
+Note that as far as I know, if you want VS Code to inherit renv/venv settings you must start it from within WSL in a shell that has already activated the virtual environment, so get used to typing `code .` in your project root.
 
 # R
 
@@ -212,7 +212,7 @@ $ sudo apt install libfontconfig1-dev libfreetype6-dev
 
 ## Install R Packages from Binaries {#install-r-packages-from-binaries}
 
-Before installing user libraries set up your .Rprofile to use the Posit repo. The main reason is this repo has pre-compiled R packages so is much faster than CRAN. Duckdb for instance can take an hour or more to install from CRAN. [For more information about using the Posit binary repos go here](https://packagemanager.posit.co/client/#/repos/cran/setup).
+Before installing user libraries set up your .Rprofile to use the Posit repo. The main reason is this repo has pre-compiled R packages so is much faster than compiling source packages from CRAN, not to mention avoids many dev library dependency sissues. Duckdb for instance can take an hour or more to install from CRAN. [For more information about using the Posit binary repos go here](https://packagemanager.posit.co/client/#/repos/cran/setup).
 
 If on WSL, find your Ubuntu codename:
 
@@ -284,7 +284,7 @@ getOption("repos")
 
 Should return a string with "posit".
 
-**Protip:** if you have significant trouble installing R packages from Posit or CRAN try installing the Ubuntu package first, and then re-installing your user library version. This will help because the repo builders do an excellent job of installing all the OS package dependencies. You can then install the package to your local library. For instance:
+**Protip:** if you are having dependency issues with a packages, try installing the Ubuntu repo's package first, and then re-installing your user library version. This will help because the repo builders do an excellent job of installing all the OS package dependencies. You can then install the package to your local library. For instance:
 
 ``` bash
 $ sudo apt install r-cran-tidyverse
