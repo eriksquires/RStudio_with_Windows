@@ -70,6 +70,19 @@ For the rest of this article we assume you will go down the WSL path,
 but some tips may still apply to you elsewhere, like using the Posit
 repo and `here()`.
 
+## WSL vs. VirtualBox
+
+Believe it or not, if you are forced into a MS Ecosystem and are trying
+to chose between these two then WSL wins for two big reasons:
+
+- File system integration
+
+- GUI apps run on Windows desktop
+
+This means you don’t have to use a shared folder, or Samba mount, and
+when you start RStudio it will co-exist side by side with your
+Sharepoint window. VirtualBox is still very usable.
+
 # Windows Subsystem for Linux
 
 ## Installation
