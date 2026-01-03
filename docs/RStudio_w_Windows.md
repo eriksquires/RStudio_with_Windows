@@ -11,10 +11,8 @@ you how to make your R / data science world coexist with Windows.
 
 If you absolutely must run Windows without WSL or a Linux virtual
 machine you should consider [changing your repo to install from prebuilt
-binaries](#install-r-packages-from-binaries). This will usually prevent
-you from having to compile anything and is much faster than installing
-from sources. There are R/RStudio users who end up happy this way, I was
-not one of them.
+binaries](#install-r-packages-from-binaries). This avoid compilation
+issues and is much faster than installing from sources.
 
 If your main development tool is R and RStudio and all the packages you
 need are available as binaries you may be all set and the rest of this
@@ -274,10 +272,13 @@ settings, and direnv will all behave exactly as you would expect so long
 as you start code in the right directory. This of course also means that
 if VS Code is your IDE of choice you are free to use it for R as well.
 
-Note that as far as I know, if you want VS Code to inherit renv/venv
-settings you must start it from within WSL in a shell that has already
-activated the virtual environment, so get used to typing `code .` in
-your project root.
+## Virtual Environments
+
+If you start VS Code from your shell it will inherit any environment
+settings including virtual environments already activated. I believe
+this does not work if you start it from WIndows and then connect, or
+change project folders. If you are happy configuring projects in VS Code
+alone then this won’t be an issue for you. w
 
 # R
 
