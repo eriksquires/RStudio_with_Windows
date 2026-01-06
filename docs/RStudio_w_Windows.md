@@ -79,9 +79,16 @@ to chose between these two then WSL wins for two big reasons:
 
 - GUI apps run on Windows desktop
 
+- Performance / Hypervisor
+
 This means you don’t have to use a shared folder, or Samba mount, and
 when you start RStudio it will co-exist side by side with your
-Sharepoint window. VirtualBox is still very usable.
+Sharepoint window.
+
+On recent testing with VIrtualBox on Windows 11 on a brand new Dell
+laptop VIrtualBox performance was sadly untolerable. I tried many fixes
+but at the end of the day it was strangled by the hypervisor. Do a
+search for VirtualBox and “green turtle.”
 
 # Windows Subsystem for Linux
 
@@ -91,7 +98,7 @@ If you don’t even have WSL installed you will need to install it. You
 can install from an elevated PowerShell:
 
 ``` text
-PS C:\WINDOWS\system32> wsl --install
+PS C:\WINDOWS\system32> wsl --install Ubuntu-24.04
 ```
 
 ## Configuration
@@ -125,7 +132,7 @@ editors and any package really that isn’t network dependent. For
 instance:
 
 ``` bash
-$ sudo apt install gedit
+sudo apt install gedit
 ```
 
 Go ahead and install your favorite editor now and replace `gedit` with
@@ -156,7 +163,7 @@ AppArmor for normal operation.
 ### Configure systemd
 
 ``` bash
-$ sudo gedit /etc/wsl.conf
+sudo gedit /etc/wsl.conf
 ```
 
 Add the following two lines:
@@ -196,13 +203,13 @@ Start your WSL normally.
 ### Enable AppArmor
 
 ``` bash
-$ sudo systemctl enable --now apparmor
+sudo systemctl enable --now apparmor
 ```
 
 Reboot WSL once more and try an experiment:
 
 ``` bash
-$ sudo apt install pgadmin-desktop
+sudo apt install pgadmin-desktop
 ```
 
 If this installs without throwing an error you are good to go.
@@ -215,21 +222,21 @@ especially like the auth command.
 
 ``` bash
 # Install gh
-$ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
-$ sudo apt update
-$ sudo apt install git gh
+sudo apt update
+sudo apt install git gh
 
 # Authenticate your git installation.
 # Make sure you already have a Github login.
 # Add --hostname your_gh_server.your_corp.com if using a private repo
-$ gh auth login 
+gh auth login 
 
 # Despite gh doing the auth for you we still need a couple more configs
 # to make commits automatic. 
-$ git config --global user.name "Your Name"
-$ git config --global user.email "your.email@example.com"
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
 ```
 
 # VS Code
@@ -260,8 +267,8 @@ starting code. Set up the git commit message editor to use `code` as
 well:
 
 ``` bash
-$ git config --global core.editor "code --wait"
-$ cd ~/dev
+git config --global core.editor "code --wait"
+cd ~/dev
 ```
 
 OK, now you are ready to experience the magic of VS Code / WSL
@@ -270,8 +277,8 @@ integration!
 ``` bash
 # If needed: 
 # mkdir ~/dev 
-$ cd ~/dev
-$ code . # Launches the Windows VS Code but sees ~/dev file folders.
+cd ~/dev
+code . # Launches the Windows VS Code but sees ~/dev file folders.
 ```
 
 When it finishes launching look on the bottom left corner of the window
@@ -298,9 +305,9 @@ alone then this won’t be an issue for you. w
 ## Install R itself:
 
 ``` bash
-$ sudo apt install build-essential gfortran
-$ sudo apt install r-base
-$ sudo apt install libfontconfig1-dev libfreetype6-dev
+sudo apt install build-essential gfortran
+sudo apt install r-base
+sudo apt install libfontconfig1-dev libfreetype6-dev
 ```
 
 ## Install R Packages from Binaries
@@ -316,7 +323,7 @@ here](https://packagemanager.posit.co/client/#/repos/cran/setup).
 If on WSL, find your Ubuntu codename:
 
 ``` text
-$ lsb_release -a
+lsb_release -a
 
 No LSB modules are available.
 Distributor ID: Ubuntu
@@ -325,7 +332,7 @@ Release:        24.04
 Codename:       noble
 ```
 
-For WSL: `$ gedit ~/.Rprofile` . For R on Windows:
+For WSL: `gedit ~/.Rprofile` . For R on Windows:
 `notepad $env:USERPROFILE\.Rprofile`
 
 Add these lines to .Rprofile.
@@ -354,16 +361,16 @@ find the right deb package (from lsb_release, above), and paste the link
 to it below:
 
 ``` bash
-$ mkdir ~/downloads
-$ cd ~/downloads
+mkdir ~/downloads
+cd ~/downloads
 
-$ wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2025.09.2-418-amd64.deb
+wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2025.09.2-418-amd64.deb
 
-$ sudo apt install ./rstudio-2025.09.2-418-amd64.deb
+sudo apt install ./rstudio-2025.09.2-418-amd64.deb
 
 # If needed: 
 # mkdir ~/bin
-$ gedit ~/bin/rstudio
+gedit ~/bin/rstudio
 ```
 
 Add these lines to ~/bin/rstudio to make it more terminal friendly:
@@ -377,7 +384,7 @@ Add these lines to ~/bin/rstudio to make it more terminal friendly:
 Make it executable
 
 ``` bash
-$ chmod +x ~/bin/rstudio
+chmod +x ~/bin/rstudio
 ```
 
 At this point you can start RStudio from the command line or Windows
@@ -397,7 +404,7 @@ excellent job of installing all the OS package dependencies. You can
 then install the package to your local library. For instance:
 
 ``` bash
-$ sudo apt install r-cran-tidyverse
+sudo apt install r-cran-tidyverse
 ```
 
 Then in RStudio:
@@ -430,8 +437,8 @@ When running from Rscript though you need to start in the project root.
 Here’s an example:
 
 ``` bash
-$ cd ~/dev/finance_forecast_project
-$ Rscript R/my_forecast.R
+cd ~/dev/finance_forecast_project
+Rscript R/my_forecast.R
 ```
 
 # Homebrew
